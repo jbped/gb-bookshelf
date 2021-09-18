@@ -8,7 +8,7 @@ const resolvers = {
       if(context.user) {
           const userData = await User.findOne({ _id: context.user._id })
               .select('-__v -password')
-              .populate('savedBooks');
+              // .populate('savedBooks');
           return userData
       }
       throw new AuthenticationError('Not logged in')
@@ -48,7 +48,7 @@ const resolvers = {
           { $addToSet: { savedBooks: input } },
           { new: true }
         )
-          .populate('books');
+          .populate('savedBooks');
         return updatedUser
       }
       throw new AuthenticationError("You need to be logged in to save a book to your list")
@@ -57,7 +57,7 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           context.user._id,
-          { $pull: { savedBooks: bookId } },
+          { $pull: { savedBooks: { bookId } }} ,
           { new: true }
         )
           .populate('books');
