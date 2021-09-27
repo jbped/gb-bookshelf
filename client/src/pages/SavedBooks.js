@@ -10,13 +10,13 @@ import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
   // const [userData, setUserData] = useState({});
-  const [deleteBook, { error }] = useMutation(REMOVE_BOOK)
-  const {loading, data} = useQuery(GET_ME)
-  console.log(loading)
-  const userData = data?.me || {};
-  error && console.log(error)
+  const [deleteBook] = useMutation(REMOVE_BOOK)
+  const { loading, data } = useQuery(GET_ME)
+  // console.log("loading", loading)
 
-  console.log(userData)
+  let userData = data?.me || {};
+  // console.log("userData", userData)
+
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
@@ -27,8 +27,13 @@ const SavedBooks = () => {
     }
 
     try {
-      const { data } = await deleteBook({ variables: { bookId } })
+      await deleteBook({ variables: { bookId } })
       removeBookId(bookId);
+      // const index = userData.savedBooks.findIndex(obj => obj.bookId === bookId);
+      // console.log(index)
+
+      //  userData.savedBooks.splice(index, 1)
+      // userData.savedBooks = [...newSavedBooks]
     } catch (err) {
       console.error(err);
     }
@@ -61,8 +66,8 @@ const SavedBooks = () => {
                   <Card.Title>{book.title}</Card.Title>
                   <p className='small'>Authors: {book.authors}</p>
                   <Card.Text>{book.description}</Card.Text>
-                  <Button className='btn-block btn-danger' onClick={() => {handleDeleteBook(book.bookId)}}>
-                    Delete this Book! 
+                  <Button className='btn-block btn-danger' onClick={() => { handleDeleteBook(book.bookId) }}>
+                    Delete this Book!
                   </Button>
                 </Card.Body>
               </Card>
