@@ -4,6 +4,7 @@
 ## Description
 [Google Books Reading Den](https://gbooks-reading-den.herokuapp.com/) is a bookshelf styled app. It allows users to create an account, search for books, and add them to their saved books. This allows them to return to their saved books at a later time to see what is next in their reading list.
 
+![Saved books page](https://user-images.githubusercontent.com/76881086/134847814-437175a0-0693-4795-81e6-29ddc7451614.png)
 
 ## Table of Contents
 * [Installation](#installation)
